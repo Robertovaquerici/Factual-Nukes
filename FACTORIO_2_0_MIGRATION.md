@@ -255,6 +255,50 @@ Check all `prerequisites` arrays for technologies that no longer exist in 2.0 (e
 
 ---
 
+## 16. `LuaEntityPrototype.max_health` removed (runtime scripts)
+
+`max_health` no longer exists on `LuaEntityPrototype`. Replace prototype-based checks with instance-based ones:
+
+```lua
+-- Checking if entity is damageable (max_health ~= 0)
+-- Before
+entity.prototype.max_health ~= 0
+-- After
+entity.health ~= nil
+
+-- Checking if entity is indestructible (max_health == 0)
+-- Before
+entity.prototype.max_health == 0
+-- After
+entity.health == nil
+
+-- Computing damage ratio (needed current/max)
+-- Before
+local ratio = entity.health / entity.prototype.max_health
+-- After
+local ratio = entity.get_health_ratio()
+```
+
+---
+
+## 17. Renamed decoratives
+
+Rock and sand-rock decorative names were reordered (size prefix/suffix swapped):
+
+| 1.1 name | 2.0 name |
+|---|---|
+| `rock-tiny` | `tiny-rock` |
+| `rock-small` | `small-rock` |
+| `rock-medium` | `medium-rock` |
+| `rock-big` | `big-rock` |
+| `rock-huge` | `huge-rock` |
+| `sand-rock-small` | `small-sand-rock` |
+| `sand-rock-medium` | `medium-sand-rock` |
+| `sand-rock-big` | `big-sand-rock` |
+| `puberty-decal` | **removed** |
+
+---
+
 ## General approach
 
 1. Load the mod, read the first error, fix it.

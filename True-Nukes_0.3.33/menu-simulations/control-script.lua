@@ -545,7 +545,7 @@ local function moveBlast(i,blast,pastEHits)
 			local xdif = entity.position.x-center.x
 			local ydif = entity.position.y-center.y
 			local distSq = xdif*xdif + ydif*ydif
-			if((not (entity.prototype.max_health == 0)) and distSq > (blast.r - blast.speed)*(blast.r - blast.speed) and distSq <= blast["r"]*blast["r"]) then 
+			if((not (entity.health == nil)) and distSq > (blast.r - blast.speed)*(blast.r - blast.speed) and distSq <= blast["r"]*blast["r"]) then 
 				local dist = math.sqrt(xdif*xdif + ydif*ydif)
 				local damage = blast.pow/distSq*blast.damage_init+blast.blast_min_damage
 				local t = entity.type
@@ -611,7 +611,7 @@ local function moveBlast(i,blast,pastEHits)
 						if(entity.valid)then
 							entity.damage(40, blast.force, "physical", blast.cause)
 						end
-						if(entity.valid and entity.type == "car" and (entity.prototype.max_health >= 1000 or fireShield)) then
+						if(entity.valid and entity.type == "car" and (entity.health ~= nil or fireShield)) then
 							entity.damage(80, blast.force, "fire", blast.cause)
 						end
 					else
@@ -619,7 +619,7 @@ local function moveBlast(i,blast,pastEHits)
 						if(entity.valid)then
 							entity.damage(40, blast.force, "physical")
 						end
-						if(entity.valid and entity.type == "car" and (entity.prototype.max_health >= 1000 or fireShield)) then
+						if(entity.valid and entity.type == "car" and (entity.health ~= nil or fireShield)) then
 							entity.damage(80, blast.force, "fire")
 						end
 					end
@@ -1281,7 +1281,7 @@ local function atomic_weapon_hit(event, crater_internal_r, crater_external_r, fi
 	 end
 	 -- do thermal heat-wave damage
 	 for _,v in pairs(game.surfaces[event.surface_index].find_entities_filtered{position=position, radius=thermal_max_r}) do
-		if(v.valid and not (v.prototype.max_health == 0)) then
+		if(v.valid and v.health ~= nil) then
 			local distSq = (v.position.x-position.x)*(v.position.x-position.x)+(v.position.y-position.y)*(v.position.y-position.y)
 			if(distSq>fireball_r) then
 				local damage = thermal_max_r*thermal_max_r/distSq*10	
