@@ -3,8 +3,7 @@ if(weaponTypes["rounds-magazine"]) then
     type = "ammo",
     name = "piercing-rounds-magazine",
     icon = "__base__/graphics/icons/piercing-rounds-magazine.png",
-    icon_size = 64, icon_mipmaps = 4,
-    ammo_type =
+    icon_size = 64,    ammo_type =
     {
       category = "bullet",
       action =

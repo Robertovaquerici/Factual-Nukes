@@ -7,17 +7,17 @@ weaponTypes["se-delivery-cannon-weapon"]= {
   base_item = "se-delivery-cannon-weapon-capsule",
   
   override = function (weapontype, warheadWeapon)
-    local ingredients = {{name = "se-delivery-cannon-weapon-capsule", amount = 1}}
+    local ingredients = {{type="item", name = "se-delivery-cannon-weapon-capsule", amount = 1}}
 
     if(warheadWeapon.recipe.build_up_ingredient) then
       log("Complicated: built up explosion flattened for SE-delivery cannon...")
       for _, ing in pairs(data.raw.recipe["se-delivery-cannon-weapon-pack-" .. "warhead-util-projectile" .. warheadWeapon.recipe.build_up_ingredient.name].ingredients) do
         if ing.name ~= "se-delivery-cannon-weapon-capsule" and ing[1] ~= "se-delivery-cannon-weapon-capsule" then
-          table.insert(ingredients, {name = ing.name or ing[1], amount = (ing.amount or ing[2])*warheadWeapon.recipe.build_up_ingredient.amount})
+          table.insert(ingredients, {type="item", name = ing.name or ing[1], amount = (ing.amount or ing[2])*warheadWeapon.recipe.build_up_ingredient.amount})
         end
       end
     else
-      table.insert(ingredients, {name = warheadWeapon.recipe.warhead_name, amount = 1})
+      table.insert(ingredients, {type="item", name = warheadWeapon.recipe.warhead_name, amount = 1})
     end
     for _,i in pairs(warheadWeapon.recipe.additional_ingedients) do
       table.insert(ingredients, i)
@@ -60,8 +60,7 @@ weaponTypes["se-delivery-cannon-weapon"]= {
         type = "artillery-flare",
         name = "se-dummy-artillery-flare-".."warhead-util-projectile"..warheadWeapon.appendName,
         icon = "__base__/graphics/icons/artillery-targeting-remote.png",
-        icon_size = 64, icon_mipmaps = 4,
-        flags = {"placeable-off-grid", "not-on-map"},
+        icon_size = 64,        flags = {"placeable-off-grid", "not-on-map"},
         map_color = warheadWeapon.chart_tint or {r=1, g=0.5, b=0},
         life_time = 0 * 60,
         initial_height = 0,
@@ -86,12 +85,12 @@ weaponTypes["se-delivery-cannon-weapon"]= {
       {
         type = "recipe",
         name = "se-delivery-cannon-artillery-targeter-"..warheadWeapon.appendName,
-        result = "se-delivery-cannon-artillery-targeter-".."warhead-util-projectile"..warheadWeapon.appendName,
+        results = {{type="item", name="se-delivery-cannon-artillery-targeter-".."warhead-util-projectile"..warheadWeapon.appendName, amount=1}},
         enabled = false,
         energy_required = 0.5,
         ingredients = {
-          { "processing-unit", 1 },
-          { "radar", 1 },
+          {type="item", name="processing-unit", amount=1},
+          {type="item", name="radar", amount=1},
         },
         requester_paste_multiplier = 1,
         always_show_made_in = false,

@@ -1,9 +1,9 @@
 script.on_init(function() onInit() end)
 
 function onInit()
-    global.TN_shockwave_approaching = global.TN_shockwave_approaching or false
-    global.TN_shockwave_impact_tick = global.TN_shockwave_impact_tick or {}
-	global.TN_lightEffects = global.TN_lightEffects or {}
+    storage.TN_shockwave_approaching = storage.TN_shockwave_approaching or false
+    storage.TN_shockwave_impact_tick = storage.TN_shockwave_impact_tick or {}
+	storage.TN_lightEffects = storage.TN_lightEffects or {}
     -- WIP
 end
 
@@ -73,11 +73,11 @@ function createBlastSoundsAndFlash(position, surface, radius_1, radius_2, radius
 		effects.ids.flash = flash
 	end
 	effects.light_scale = light_scale;
-	if global.TN_lightEffects == nil then
-		global.TN_lightEffects = {}
+	if storage.TN_lightEffects == nil then
+		storage.TN_lightEffects = {}
 	end
 	
-	global.TN_lightEffects[#global.TN_lightEffects+1] = effects
+	storage.TN_lightEffects[#storage.TN_lightEffects+1] = effects
 		
         for i, player in pairs(game.connected_players) do
 		if player.surface.index == evtSurfaceID then
@@ -103,14 +103,14 @@ function createBlastSoundsAndFlash(position, surface, radius_1, radius_2, radius
 end
 
 function everyTick(event)	
-	if global.TN_lightEffects == nil then
-		global.TN_lightEffects = {}
+	if storage.TN_lightEffects == nil then
+		storage.TN_lightEffects = {}
 	end
-	if global.TN_lightEffects ~= nil then
-		for i, effects in pairs(global.TN_lightEffects) do
+	if storage.TN_lightEffects ~= nil then
+		for i, effects in pairs(storage.TN_lightEffects) do
 			effects.ttl = effects.ttl - 1
 			if effects.ttl <= 0 then 
-				global.TN_lightEffects[i] = nil
+				storage.TN_lightEffects[i] = nil
 			else
 				local maxDur = effects.maxDur
 				if effects.ids.flash ~= nil then
@@ -123,28 +123,28 @@ function everyTick(event)
 					if (maxDur - effects.ttl) < effects.flashDuration then
 						fs = ((maxDur - effects.ttl) / effects.flashDuration) * effects.flashMaxScale
 						
-						rendering.set_scale(flashBase, fs)
-						rendering.set_x_scale(flash, fs)
-						rendering.set_y_scale(flash, fs)
-						
+						flashBase.scale = fs
+						flash.x_scale = fs
+						flash.y_scale = fs
+
 					elseif (maxDur - effects.ttl) < effects.flashTransition then
 						fs = effects.flashMaxScale - ((effects.flashMaxScale - effects.flashTransitionScale) / (effects.flashTransition - effects.flashDuration)) * (maxDur - effects.ttl - effects.flashDuration)
 						ftProgress = (effects.flashMaxScale - fs) / effects.flashTransitionScale
-						
-						rendering.set_x_scale(flash, fs)
-						rendering.set_y_scale(flash, fs)
-						rendering.set_intensity(flashBase, 1 - ftProgress)
-						
+
+						flash.x_scale = fs
+						flash.y_scale = fs
+						flashBase.intensity = 1 - ftProgress
+
 						if (maxDur - effects.ttl) < effects.flashTransitionStartFadeOut then
-							local fctProgress = (maxDur - effects.ttl - effects.flashDuration) / (effects.flashTransitionStartFadeOut - effects.flashDuration) 
-							
-							local currentColor = rendering.get_color(flash)
-							
-							rendering.set_color(flash, {currentColor.r + effects.flashTransitionColorStep[1], currentColor.g + effects.flashTransitionColorStep[2], currentColor.b + effects.flashTransitionColorStep[3], currentColor.a + effects.flashTransitionColorStep[4]})
+							local fctProgress = (maxDur - effects.ttl - effects.flashDuration) / (effects.flashTransitionStartFadeOut - effects.flashDuration)
+
+							local currentColor = flash.color
+
+							flash.color = {currentColor.r + effects.flashTransitionColorStep[1], currentColor.g + effects.flashTransitionColorStep[2], currentColor.b + effects.flashTransitionColorStep[3], currentColor.a + effects.flashTransitionColorStep[4]}
 						else
 							local ffaProgress = 1 - ((maxDur - effects.ttl - effects.flashTransitionStartFadeOut) / (effects.flashTransition - effects.flashTransitionStartFadeOut))
-							
-							rendering.set_color(flash, {effects.flashTransitionColorEnd[1] * ffaProgress, effects.flashTransitionColorEnd[2] * ffaProgress, effects.flashTransitionColorEnd[3] * ffaProgress, effects.flashTransitionColorEnd[4] * ffaProgress})
+
+							flash.color = {effects.flashTransitionColorEnd[1] * ffaProgress, effects.flashTransitionColorEnd[2] * ffaProgress, effects.flashTransitionColorEnd[3] * ffaProgress, effects.flashTransitionColorEnd[4] * ffaProgress}
 						end
 					end
 				end
@@ -167,22 +167,22 @@ function everyTick(event)
 				local objects = effects.ids.objects
 				local center = effects.ids.center
 				
-				rendering.set_intensity(glow, p2 * 0.4)
-				rendering.set_intensity(light, a1 * p3 * 1)
-				rendering.set_scale(light, a3 * p3 * 20 * effects.light_scale)
-				rendering.set_color(light, {1, math.min(a3/2 * p4, 1), math.min(a3/2 * p4, 1), 1})
-				
-				rendering.set_color(surface, {p02 * 0.75, p02 * 0.65, p02 * 0.6, p02 * 0.2})
-				rendering.set_x_scale(surface, p1 * 20 * effects.light_scale)
-				rendering.set_y_scale(surface, p1 * 17 * effects.light_scale)
-				
-				rendering.set_color(objects, {p02 * 1, p02 * 0.9, p02 * 0.5, p02 * 0.4})
-				rendering.set_x_scale(objects, p2 * 25 * effects.light_scale)
-				rendering.set_y_scale(objects, p2 * 21.5 * effects.light_scale)
-				
-				rendering.set_color(center, {p03 * a2 * 1, p03 * a2 * 0.3, p03 * a2 * 0.1, p03 * a2 * 0.4})
-				rendering.set_x_scale(center, p1 * 10 * effects.light_scale)
-				rendering.set_y_scale(center, p1 * 8 * effects.light_scale)
+				glow.intensity = p2 * 0.4
+				light.intensity = a1 * p3 * 1
+				light.scale = a3 * p3 * 20 * effects.light_scale
+				light.color = {1, math.min(a3/2 * p4, 1), math.min(a3/2 * p4, 1), 1}
+
+				surface.color = {p02 * 0.75, p02 * 0.65, p02 * 0.6, p02 * 0.2}
+				surface.x_scale = p1 * 20 * effects.light_scale
+				surface.y_scale = p1 * 17 * effects.light_scale
+
+				objects.color = {p02 * 1, p02 * 0.9, p02 * 0.5, p02 * 0.4}
+				objects.x_scale = p2 * 25 * effects.light_scale
+				objects.y_scale = p2 * 21.5 * effects.light_scale
+
+				center.color = {p03 * a2 * 1, p03 * a2 * 0.3, p03 * a2 * 0.1, p03 * a2 * 0.4}
+				center.x_scale = p1 * 10 * effects.light_scale
+				center.y_scale = p1 * 8 * effects.light_scale
 			end
 		end
 	end

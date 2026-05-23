@@ -6,8 +6,7 @@ if(nuke_materials.smallBoomMaterial == "californium") then
       type = "item",
       name = "californium",
       icon = "__True-Nukes__/graphics/californium.png",
-      icon_size = 64, icon_mipmaps = 4,
-      pictures =
+      icon_size = 64,      pictures =
       {
         layers =
         {
@@ -38,13 +37,12 @@ if(nuke_materials.smallBoomMaterial == "californium") then
       energy_required = 120,
       enabled = false,
       category = "centrifuging",
-      ingredients = {{nuke_materials.boomMaterial, 10}, {nuke_materials.deadMaterial, 1}},
+      ingredients = {{type="item", name=nuke_materials.boomMaterial, amount=10}, {type="item", name=nuke_materials.deadMaterial, amount=1}},
       icon = "__True-Nukes__/graphics/californium-processing.png",
-      icon_size = 64, icon_mipmaps = 4,
-      subgroup = "intermediate-product",
+      icon_size = 64,      subgroup = "intermediate-product",
       order = "r[uranium-processing]-da[californium-processing]",
       main_product = "",
-      results = {{nuke_materials.boomMaterial, 9}, {"californium", 1}},
+      results = {{type="item", name=nuke_materials.boomMaterial, amount=9}, {type="item", name="californium", amount=1}},
       allow_decomposition = false
     },
     {
@@ -53,15 +51,15 @@ if(nuke_materials.smallBoomMaterial == "californium") then
       energy_required = 20,
       enabled = false,
       category = "centrifuging",
-      ingredients = {{nuke_materials.boomMaterial, 5}, {nuke_materials.reflector, 2}},
+      ingredients = {{type="item", name=nuke_materials.boomMaterial, amount=5}, {type="item", name=nuke_materials.reflector, amount=2}},
       icons = {
-        {icon = "__True-Nukes__/graphics/californium-processing.png", icon_size = 64, icon_mipmaps = 4},
+        {icon = "__True-Nukes__/graphics/californium-processing.png", icon_size = 64},
         {icon = "__True-Nukes__/graphics/plus-red.png", icon_size = 32, scale = 0.333, shift = {10, -10}}
       },
       subgroup = "intermediate-product",
       order = "r[uranium-processing]-dk[californium-processing]",
       main_product = "",
-      results = {{nuke_materials.boomMaterial, 4}, {nuke_materials.deadMaterial, 1}, {nuke_materials.reflector, 1}, {name = nuke_materials.reflector, amount = 1, probability = 0.6}, {"californium", 1}},
+      results = {{type="item", name=nuke_materials.boomMaterial, amount=4}, {type="item", name=nuke_materials.deadMaterial, amount=1}, {type="item", name=nuke_materials.reflector, amount=1}, {type="item", name = nuke_materials.reflector, amount = 1, probability = 0.6}, {type="item", name="californium", amount=1}},
       allow_decomposition = false
     },
   });
@@ -74,23 +72,22 @@ data:extend{
     energy_required = 10,
     enabled = false,
     category = "centrifuging",
-    ingredients = {{"uranium-235", 20}, {"uranium-238", 5}, {nuke_materials.reflector, 2}},
+    ingredients = {{type="item", name="uranium-235", amount=20}, {type="item", name="uranium-238", amount=5}, {type="item", name=nuke_materials.reflector, amount=2}},
     icons = {
-      {icon = "__base__/graphics/icons/kovarex-enrichment-process.png", icon_size = 64, icon_mipmaps = 4},
+      {icon = "__base__/graphics/icons/kovarex-enrichment-process.png", icon_size = 64},
       {icon = "__True-Nukes__/graphics/plus-red.png", icon_size = 32, scale = 0.333, shift = {10, -10}}
     },
     subgroup = "intermediate-product",
     order = "r[uranium-processing]-cc[kovarex-enrichment-process]",
     main_product = "",
-    results = {{"uranium-235", 21}, {"uranium-238", 2}, {nuke_materials.reflector, 1}, {name = nuke_materials.reflector, amount = 1, probability = 0.6}},
+    results = {{type="item", name="uranium-235", amount=21}, {type="item", name="uranium-238", amount=2}, {type="item", name=nuke_materials.reflector, amount=1}, {type="item", name = nuke_materials.reflector, amount = 1, probability = 0.6}},
     allow_decomposition = false
   },
   {
     type = "item",
     name = "FOGBANK",
     icon = "__True-Nukes__/graphics/FOGBANK.png",
-    icon_size = 64, icon_mipmaps = 4,
-    subgroup = "intermediate-product",
+    icon_size = 64,    subgroup = "intermediate-product",
     order = "r[fogbank]",
     stack_size = 50
   },
@@ -126,8 +123,7 @@ data:extend{
     type = "item",
     name = "neutron-reflector",
     icon = "__True-Nukes__/graphics/neutron-reflector.png",
-    icon_size = 64, icon_mipmaps = 4,
-    subgroup = "intermediate-product",
+    icon_size = 64,    subgroup = "intermediate-product",
     order = "r[neutron-reflector]",
     stack_size = 50
   },
@@ -165,8 +161,7 @@ if(nuke_materials.fusionMaterial == "tritium-canister") then
       type = "item",
       name = "tritium-breeder-fuel-cell",
       icon = "__True-Nukes__/graphics/tritium-breeder-fuel-cell.png",
-      icon_size = 64, icon_mipmaps = 4,
-      pictures =
+      icon_size = 64,      pictures =
       {
         layers =
         {
@@ -197,7 +192,7 @@ if(nuke_materials.fusionMaterial == "tritium-canister") then
       type = "item",
       name = "advanced-tritium-breeder-fuel-cell",
       icons = {
-        {icon = "__True-Nukes__/graphics/tritium-breeder-fuel-cell.png", icon_size = 64, icon_mipmaps = 4},
+        {icon = "__True-Nukes__/graphics/tritium-breeder-fuel-cell.png", icon_size = 64},
         {icon = "__True-Nukes__/graphics/plus-red.png", icon_size = 32, scale = 0.333, shift = {10, -10}}
       },
       pictures =
@@ -237,8 +232,7 @@ if(nuke_materials.fusionMaterial == "tritium-canister") then
       type = "item",
       name = "used-up-tritium-breeder-fuel-cell",
       icon = "__True-Nukes__/graphics/used-up-tritium-breeder-fuel-cell.png",
-      icon_size = 64, icon_mipmaps = 4,
-      subgroup = "intermediate-product",
+      icon_size = 64,      subgroup = "intermediate-product",
       order = "s[used-up-tritium-breeder-fuel-cell]",
       stack_size = 50
     },
@@ -246,7 +240,7 @@ if(nuke_materials.fusionMaterial == "tritium-canister") then
       type = "item",
       name = "used-up-advanced-tritium-breeder-fuel-cell",
       icons = {
-        {icon = "__True-Nukes__/graphics/used-up-tritium-breeder-fuel-cell.png", icon_size = 64, icon_mipmaps = 4},
+        {icon = "__True-Nukes__/graphics/used-up-tritium-breeder-fuel-cell.png", icon_size = 64},
         {icon = "__True-Nukes__/graphics/plus-red.png", icon_size = 32, scale = 0.333, shift = {10, -10}}
       },
       subgroup = "intermediate-product",
@@ -260,13 +254,12 @@ if(nuke_materials.fusionMaterial == "tritium-canister") then
       energy_required = 60,
       enabled = false,
       category = "centrifuging",
-      ingredients = {{"used-up-tritium-breeder-fuel-cell", 5}, {"plastic-bar", 5}},
+      ingredients = {{type="item", name="used-up-tritium-breeder-fuel-cell", amount=5}, {type="item", name="plastic-bar", amount=5}},
       icon = "__True-Nukes__/graphics/tritium-extraction.png",
-      icon_size = 64, icon_mipmaps = 1,
-      subgroup = "intermediate-product",
+      icon_size = 64,      subgroup = "intermediate-product",
       order = "r[uranium-processing]-cj[tritium-extraction]",
       main_product = "",
-      results = {{"tritium-canister", 1}, {"uranium-238", 3}},
+      results = {{type="item", name="tritium-canister", amount=1}, {type="item", name="uranium-238", amount=3}},
       allow_decomposition = false
     },
 
@@ -276,15 +269,15 @@ if(nuke_materials.fusionMaterial == "tritium-canister") then
       energy_required = 30,
       enabled = false,
       category = "centrifuging",
-      ingredients = {{"used-up-advanced-tritium-breeder-fuel-cell", 2}, {"plastic-bar", 5}},
+      ingredients = {{type="item", name="used-up-advanced-tritium-breeder-fuel-cell", amount=2}, {type="item", name="plastic-bar", amount=5}},
       icons = {
-        {icon = "__True-Nukes__/graphics/tritium-extraction.png", icon_size = 64, icon_mipmaps = 4},
+        {icon = "__True-Nukes__/graphics/tritium-extraction.png", icon_size = 64},
         {icon = "__True-Nukes__/graphics/plus-red.png", icon_size = 32, scale = 0.333, shift = {10, -10}}
       },
       subgroup = "intermediate-product",
       order = "r[uranium-processing]-cm[tritium-extraction]",
       main_product = "",
-      results = {{"tritium-canister", 1}, {"uranium-238", 2}, {name = nuke_materials.reflector, amount = 1, probability = 0.8}},
+      results = {{type="item", name="tritium-canister", amount=1}, {type="item", name="uranium-238", amount=2}, {type="item", name = nuke_materials.reflector, amount = 1, probability = 0.8}},
       allow_decomposition = false
     },
     {
@@ -294,8 +287,7 @@ if(nuke_materials.fusionMaterial == "tritium-canister") then
       enabled = false,
       category = "crafting-with-fluid",
       ingredients = table.deepcopy(data.raw.recipe["uranium-fuel-cell"].ingredients),
-      result = "advanced-tritium-breeder-fuel-cell",
-      result_count = 10
+      results = {{type="item", name="advanced-tritium-breeder-fuel-cell", amount=10}}
     },
     {
       type = "recipe",
@@ -304,15 +296,13 @@ if(nuke_materials.fusionMaterial == "tritium-canister") then
       enabled = false,
       category = "crafting-with-fluid",
       ingredients = table.deepcopy(data.raw.recipe["uranium-fuel-cell"].ingredients),
-      result = "tritium-breeder-fuel-cell",
-      result_count = 10
+      results = {{type="item", name="tritium-breeder-fuel-cell", amount=10}}
     },
     {
       type = "item",
       name = "tritium-canister",
       icon = "__True-Nukes__/graphics/tritium-canister.png",
-      icon_size = 64, icon_mipmaps = 1,
-      pictures =
+      icon_size = 64,      pictures =
       {
         layers =
         {
@@ -339,7 +329,7 @@ if(nuke_materials.fusionMaterial == "tritium-canister") then
   })
 table.insert(data.raw.recipe["tritium-breeder-fuel-cell"].ingredients, {type="fluid", name="water", amount=100})
 table.insert(data.raw.recipe["advanced-tritium-breeder-fuel-cell"].ingredients, {type="fluid", name="water", amount=100})
-table.insert(data.raw.recipe["advanced-tritium-breeder-fuel-cell"].ingredients, {nuke_materials.reflector, 5})
+table.insert(data.raw.recipe["advanced-tritium-breeder-fuel-cell"].ingredients, {type="item", name=nuke_materials.reflector, amount=5})
 end
 for i = 0,100 do
   if(data.raw.module["productivity-module-" .. i] and data.raw.module["productivity-module-" .. i].limitation) then

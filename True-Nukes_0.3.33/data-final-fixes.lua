@@ -12,6 +12,20 @@ if(settings.startup["enable-medium-atomics"].value and settings.startup["enable-
   data.raw.technology["atomic-bomb"].unit.time = 1
 end
 
+local test_packs = {
+  "test-pack-atomic-20t-1",
+  "test-pack-atomic-500t-1",
+  "test-pack-atomic-20t-3",
+  "test-pack-atomic-1kt-1",
+  "test-pack-atomic-15kt-1",
+  "test-pack-atomic-2-stage-100kt-1",
+}
+for _, pack in pairs(test_packs) do
+  if data.raw.tool[pack] then
+    table.insert(data.raw["lab"]["lab"].inputs, pack)
+  end
+end
+
 if mods["Atomic_Overhaul"] then
   require("compatibility.atomic-overhaul-final-fixes")
 end

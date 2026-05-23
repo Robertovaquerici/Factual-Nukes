@@ -93,7 +93,7 @@ local function damage_entity(surface, distSq, ePos, power, fire, damage_init, bl
     elseif (t=="land-mine") then
       damage = damage/10
     elseif(t=="car" or t=="spider-vehicle") then
-      if (next(entity.prototype.collision_mask)==nil)then
+      if (not next(entity.prototype.collision_mask.layers))then
         damage = damage/2
       end
     end
@@ -306,7 +306,7 @@ local function move_blast(i,blast,pastEHits, corpseMap)
     end
   end
   if(blast.r>blast.max and not hasEnded) then
-    global.blastWaves[i] = nil
+    storage.blastWaves[i] = nil
     return true
   end
   return hasEnded

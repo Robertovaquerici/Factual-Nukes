@@ -176,7 +176,7 @@ local hasCompact15kt = settings.startup["enable-compact-15kt"].value and has15kt
 local hasFusion = settings.startup["enable-fusion"].value 
 local hasCompactFusion = settings.startup["enable-compact-fusion"].value and hasFusion
 
-data.raw.technology["atomic-bomb"].prerequisites = {"basic-atomic-weapons", "rocket-control-unit", "rocket-fuel", "rocketry"}
+data.raw.technology["atomic-bomb"].prerequisites = {"basic-atomic-weapons", "rocket-fuel", "rocketry"}
 
 
 data.raw.technology["atomic-bomb"].unit.count = 1
@@ -192,8 +192,7 @@ data:extend{
   {
     type = "technology",
     name = "basic-atomic-weapons",
-    icon_size = 256, icon_mipmaps = 4,
-    icon = "__True-Nukes__/graphics/nuke-tech-basic.png",
+    icon_size = 256,    icon = "__True-Nukes__/graphics/nuke-tech-basic.png",
     effects =
     {
       
@@ -222,8 +221,7 @@ if(hasLarge) then
     {
       type = "technology",
       name = "expanded-atomics",
-      icon_size = 256, icon_mipmaps = 4,
-      icon = "__base__/graphics/technology/atomic-bomb.png",
+      icon_size = 256,      icon = "__base__/graphics/technology/atomic-bomb.png",
       effects = {},
       prerequisites = {"atomic-bomb", "kovarex-enrichment-process", "production-science-pack"},
       unit =
@@ -241,8 +239,7 @@ if(hasLarge) then
     {
       type = "technology",
       name = "full-fission-atomics",
-      icon_size = 256, icon_mipmaps = 4,
-      icon = "__base__/graphics/technology/atomic-bomb.png",
+      icon_size = 256,      icon = "__base__/graphics/technology/atomic-bomb.png",
       effects = {},
       prerequisites = {"expanded-atomics", "circuit-network"},
       unit =
@@ -268,8 +265,7 @@ if(hasMedium or hasLarge or hasCompact15kt) then
     {
       type = "technology",
       name = "artillery-atomics",
-      icon_size = 256, icon_mipmaps = 4,
-      icon = "__True-Nukes__/graphics/atomic-artillery-tech.png",
+      icon_size = 256,      icon = "__True-Nukes__/graphics/atomic-artillery-tech.png",
       effects = {},
       prerequisites = {"artillery"},
       unit =
@@ -297,8 +293,7 @@ if(nuke_materials.smallBoomMaterial == "californium") then
       {
         type = "technology",
         name = "californium-processing",
-        icon_size = 256, icon_mipmaps = 4,
-        icon = "__True-Nukes__/graphics/californium-processing-tech.png",
+        icon_size = 256,        icon = "__True-Nukes__/graphics/californium-processing-tech.png",
         effects =
         {
           {
@@ -333,8 +328,7 @@ if hasSmall or hasCompactMedium then
     {
       type = "technology",
       name = "californium-weapons",
-      icon_size = 256, icon_mipmaps = 4,
-      icon = "__True-Nukes__/graphics/small-atomic-tech.png",
+      icon_size = 256,      icon = "__True-Nukes__/graphics/small-atomic-tech.png",
       effects = {},
       prerequisites = {},
       unit =
@@ -363,8 +357,7 @@ if(hasCompactSmall or hasCompactMedium) then
     {
       type = "technology",
       name = "compact-californium-weapons",
-      icon_size = 256, icon_mipmaps = 4,
-      icon = "__True-Nukes__/graphics/many-small-atomic-tech.png",
+      icon_size = 256,      icon = "__True-Nukes__/graphics/many-small-atomic-tech.png",
       effects =
       {
         {
@@ -390,8 +383,7 @@ if(hasCompact15kt or hasCompactLarge) then
     {
       type = "technology",
       name = "compact-full-fission-weapons",
-      icon_size = 256, icon_mipmaps = 4,
-      icon = "__True-Nukes__/graphics/many-atomic-tech.png",
+      icon_size = 256,      icon = "__True-Nukes__/graphics/many-atomic-tech.png",
       effects = {},
       prerequisites = { "artillery-atomics"},
       unit =
@@ -455,8 +447,7 @@ if(hasFusion) then
     {
       type = "technology",
       name = "tritium-processing",
-      icon_size = 256, icon_mipmaps = 1,
-      icon = "__True-Nukes__/graphics/tritium-processing.png",
+      icon_size = 256,      icon = "__True-Nukes__/graphics/tritium-processing.png",
       effects =
       {
         {
@@ -486,8 +477,7 @@ if(hasFusion) then
     {
       type = "technology",
       name = "fusion-weapons",
-      icon_size = 256, icon_mipmaps = 1,
-      icon = "__True-Nukes__/graphics/fusion-bomb.png",
+      icon_size = 256,      icon = "__True-Nukes__/graphics/fusion-bomb.png",
       effects = {
         {
           type = "unlock-recipe",
@@ -533,8 +523,7 @@ if(hasCompactFusion) then
     {
       type = "technology",
       name = "compact-fusion-weapons",
-      icon_size = 256, icon_mipmaps = 1,
-      icon = "__True-Nukes__/graphics/fusion-bomb.png",
+      icon_size = 256,      icon = "__True-Nukes__/graphics/fusion-bomb.png",
       effects = {},
       prerequisites = {"fusion-weapons"},
       unit =
@@ -565,9 +554,9 @@ if(hasCompactSmall or hasCompactMedium or hasCompactLarge or hasCompact15kt) the
       name = "dense-neutron-flux",
       icons = {
         {icon = "__Warheads__/graphics/blank-64.png", icon_size = 64, scale = 1, shift = {0, -0}},
-        {icon = "__True-Nukes__/graphics/californium-processing-tech.png", icon_size = 256, scale = 0.125, shift = {12, -12}, icon_mipmaps = 4},
-        {icon = "__base__/graphics/technology/kovarex-enrichment-process.png", icon_size = 256, scale = 0.125, shift = {-12, -12}, icon_mipmaps = 4},
-        {icon = "__True-Nukes__/graphics/tritium-processing.png", icon_size = 256, scale = 0.125, shift = {0, 16}, icon_mipmaps = 4},
+        {icon = "__True-Nukes__/graphics/californium-processing-tech.png", icon_size = 256, scale = 0.125, shift = {12, -12}},
+        {icon = "__base__/graphics/technology/kovarex-enrichment-process.png", icon_size = 256, scale = 0.125, shift = {-12, -12}},
+        {icon = "__True-Nukes__/graphics/tritium-processing.png", icon_size = 256, scale = 0.125, shift = {0, 16}},
         {icon = "__True-Nukes__/graphics/plus-red.png", icon_size = 32, scale = 0.5, shift = {24, -24}},
       },
       effects =

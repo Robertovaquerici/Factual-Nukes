@@ -178,7 +178,7 @@ weaponTypes["big-rocket"]= {
   baseOrder = "d[rocket-launcher]-d",
   base_item = "rocket",
   icon = "__base__/graphics/icons/rocket.png",
-  extra_ingredients = {{"rocket-control-unit", 5}, {"rocket-fuel", 10}},
+  extra_ingredients = {{type="item", name="rocket-fuel", amount=10}},
   energy_required = 12,
   range_modifier = 3,
   cooldown_modifier = 10,
