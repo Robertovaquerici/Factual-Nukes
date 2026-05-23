@@ -26,6 +26,11 @@ for _, pack in pairs(test_packs) do
   end
 end
 
+-- SchallTankPlatoon 2.0.2 references a removed base-game graphic; patch it to use the 2.0 smoke animation
+if mods["SchallTankPlatoon"] and data.raw["smoke-with-trigger"]["Schall-poison-cloud"] then
+  data.raw["smoke-with-trigger"]["Schall-poison-cloud"].animation = table.deepcopy(data.raw["smoke-with-trigger"]["poison-cloud"].animation)
+end
+
 if mods["Atomic_Overhaul"] then
   require("compatibility.atomic-overhaul-final-fixes")
 end

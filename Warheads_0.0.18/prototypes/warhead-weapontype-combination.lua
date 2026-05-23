@@ -123,6 +123,10 @@ local function combine(weapontype, warheadWeapon)
     local ammo_category = warheadWeapon.item.ammo_category or weapontype.item.ammo_category
     item.ammo_category = ammo_category
     item.ammo_type.category = ammo_category
+    if not weapontype.item.action_creator then
+      result.valid = false
+      return result
+    end
     item.ammo_type.action = weapontype.item.action_creator(name, weapontype.item.range_modifier * warheadWeapon.item.range_modifier, warheadWeapon.projectile.action, warheadWeapon.projectile.final_action, warheadWeapon.projectile.created_action)
   elseif(weapontype.type == "land-mine") then
     item.place_result = name

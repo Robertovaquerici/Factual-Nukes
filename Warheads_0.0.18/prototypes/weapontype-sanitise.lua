@@ -238,7 +238,7 @@ local function sanitseWeapontype(weapontype)
 
   -- default action creators
   if not result.item.action_creator then
-    if result.type == "projectile" or result.type == "artillery" then
+    if (result.type == "projectile" or result.type == "artillery") and item.ammo_type then
       result.item.action_creator = function (projectile, range_mult, target_action, final_action, source_action)
         local a = table.deepcopy(item.ammo_type.action)
         local to_use = nil
@@ -278,7 +278,7 @@ local function sanitseWeapontype(weapontype)
         end
         return a
       end
-    elseif result.type == "stream" then
+    elseif result.type == "stream" and item.ammo_type then
       result.item.action_creator = function (stream, range_mult, target_action, final_action, source_action)
         local a = table.deepcopy(item.ammo_type.action)
         local to_use = nil
