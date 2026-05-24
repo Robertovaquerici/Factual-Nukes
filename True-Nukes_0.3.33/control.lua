@@ -75,6 +75,39 @@ local function tickHandler(event)
   if(storage.thermalBlasts ==nil) then
     storage.thermalBlasts = {}
   end
+  if storage.pendingFires == nil then storage.pendingFires = {} end
+  if #storage.pendingFires > 0 then
+    local budget = 500
+    for i = #storage.pendingFires, 1, -1 do
+      local e = storage.pendingFires[i]
+      local surface = game.surfaces[e.surface_index]
+      while e.inner_remaining > 0 and budget > 0 do
+        local angle = math.random() * math.pi * 2
+        local dist = math.random(0, e.inner_r)
+        local x = e.pos_x + dist * math.cos(angle)
+        local y = e.pos_y + dist * math.sin(angle)
+        local tile = surface.get_tile(x, y)
+        if tile and water.waterInCraterGoingOutDepths[tile.name] and water.waterInCraterGoingOutDepths[tile.name] > -10 then
+          surface.create_entity{name="thermobaric-wave-fire", position={x, y}}
+        else
+          surface.create_entity{name="nuclear-fire", position={x, y}}
+        end
+        e.inner_remaining = e.inner_remaining - 1
+        budget = budget - 1
+      end
+      while e.scatter_remaining > 0 and budget > 0 do
+        local dist = math.random(e.scatter_inner_r, e.scatter_outer_r)
+        local angle = math.random() * math.pi * 2
+        surface.create_entity{name="thermobaric-wave-fire", position={e.pos_x + dist*math.cos(angle), e.pos_y + dist*math.sin(angle)}}
+        e.scatter_remaining = e.scatter_remaining - 1
+        budget = budget - 1
+      end
+      if e.inner_remaining <= 0 and e.scatter_remaining <= 0 then
+        table.remove(storage.pendingFires, i)
+      end
+      if budget <= 0 then break end
+    end
+  end
   if(next(storage.blastWaves) ~= nil) then
     for i,blast in pairs(storage.blastWaves) do
       blast_system.move_blast(i,blast,0, corpseMap)
@@ -284,24 +317,33 @@ local function atomic_weapon_hit(surface_index, source, position, crater_interna
       crater_system_to_use.nukeTileChangesHeightAware(position, check_craters, surface_index, crater_internal_r, crater_external_r, fireball_r)
     end
   end
-  -- light fires as nessesary
+  -- light fires as nessesary (queued to avoid per-frame entity creation spike)
   if(flame_proportion>0 and crater_system_to_use.use_fires) then
-    for _,v in pairs(game.surfaces[surface_index].find_tiles_filtered{position=position, radius=fire_outer_r}) do
-      local rand = math.random(0, fire_outer_r)
-      if(math.random(0, 1)+flame_proportion/8>1 and rand*rand>(v.position.x-position.x)*(v.position.x-position.x)+(v.position.y-position.y)*(v.position.y-position.y)) then
-        if((not(water.waterInCraterGoingOutDepths[v.name] == nil)) and water.waterInCraterGoingOutDepths[v.name] > -10) then
-          game.surfaces[surface_index].create_entity{name="thermobaric-wave-fire",position=v.position}
-        else
-          game.surfaces[surface_index].create_entity{name="nuclear-fire",position=v.position}
-        end
-      end
+    local inner_count = math.floor(flame_proportion * fire_outer_r * fire_outer_r / 10)
+    if inner_count > 0 then
+      table.insert(storage.pendingFires, {
+        surface_index = surface_index,
+        pos_x = position.x, pos_y = position.y,
+        inner_r = fire_outer_r,
+        inner_remaining = inner_count,
+        scatter_inner_r = fire_outer_r,
+        scatter_outer_r = fire_outer_r,
+        scatter_remaining = 0,
+      })
     end
   end
   if (settings.global["nuke-random-fires"].value and create_small_fires and crater_system_to_use.use_fires) then
-    for i=(fire_outer_r*fire_outer_r/10),(small_fire_max_r*small_fire_max_r/10) do
-      local dist = math.random(fire_outer_r, math.random(fire_outer_r, small_fire_max_r))
-      local angle = math.random()*3.1416*2
-      game.surfaces[surface_index].create_entity{name="thermobaric-wave-fire",position={position.x+dist*math.cos(angle), position.y+dist*math.sin(angle)}}
+    local scatter_count = math.floor((small_fire_max_r * small_fire_max_r - fire_outer_r * fire_outer_r) / 10)
+    if scatter_count > 0 then
+      table.insert(storage.pendingFires, {
+        surface_index = surface_index,
+        pos_x = position.x, pos_y = position.y,
+        inner_r = 0,
+        inner_remaining = 0,
+        scatter_inner_r = fire_outer_r,
+        scatter_outer_r = small_fire_max_r,
+        scatter_remaining = scatter_count,
+      })
     end
   end
   thermal_system.atomic_thermal_blast(surface_index, position, force, cause, thermal_max_r, 15000, fireball_r, corpseMap)
