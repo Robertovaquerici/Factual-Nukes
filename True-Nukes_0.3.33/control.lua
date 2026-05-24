@@ -216,10 +216,10 @@ local function atomic_weapon_hit_optimised(surface_index, source, position, crat
     storage.blastWaves = {};
   end
   local blastId = math.random();
-  table.insert(storage.blastWaves, {r = fireball_r, pos = position, blastId=blastId, pow = fireball_r*fireball_r, max = blast_max_r, s = surface_index, fire = false, damage_init = 5000.0, speed = 8, fire_rad = 0, blast_min_damage = 0, itt = 1, doItts = true, ittframe = 1, force = force, cause = cause})
+  table.insert(storage.blastWaves, {r = fireball_r, pos = position, blastId=blastId, pow = fireball_r*fireball_r, max = blast_max_r, s = surface_index, fire = false, damage_init = 15000.0, speed = 8, fire_rad = 0, blast_min_damage = 0, itt = 1, doItts = true, ittframe = 1, force = force, cause = cause})
   local index = #storage.blastWaves
   local chunkData = {surface_index=surface_index, blastIndex=index, blastId=blastId, force=force, source=cause, position=position, crater_internal_r=crater_internal_r,
-    crater_external_r=crater_external_r, fireball_r=fireball_r, blast_max_r=blast_max_r, init_blast=5000.0, blast_min_damage=0, thermal_max_r=thermal_max_r, init_thermal=5000.0};
+    crater_external_r=crater_external_r, fireball_r=fireball_r, blast_max_r=blast_max_r, init_blast=15000.0, blast_min_damage=0, thermal_max_r=thermal_max_r, init_thermal=15000.0};
   local chunks = {}
   for chunk in game.surfaces[surface_index].get_chunks() do
     if(game.surfaces[surface_index].is_chunk_generated(chunk)) then
@@ -304,8 +304,8 @@ local function atomic_weapon_hit(surface_index, source, position, crater_interna
       game.surfaces[surface_index].create_entity{name="thermobaric-wave-fire",position={position.x+dist*math.cos(angle), position.y+dist*math.sin(angle)}}
     end
   end
-  thermal_system.atomic_thermal_blast(surface_index, position, force, cause, thermal_max_r, 5000, fireball_r, corpseMap)
-  table.insert(storage.blastWaves, {r = fireball_r, pos = position, pow = fireball_r*fireball_r, max = blast_max_r, s = surface_index, fire = false, damage_init = 5000.0, speed = 8, fire_rad = 0, blast_min_damage = 0, itt = 1, doItts = true, ittframe = 1, force = force, cause = cause})
+  thermal_system.atomic_thermal_blast(surface_index, position, force, cause, thermal_max_r, 15000, fireball_r, corpseMap)
+  table.insert(storage.blastWaves, {r = fireball_r, pos = position, pow = fireball_r*fireball_r, max = blast_max_r, s = surface_index, fire = false, damage_init = 15000.0, speed = 8, fire_rad = 0, blast_min_damage = 0, itt = 1, doItts = true, ittframe = 1, force = force, cause = cause})
 
   if(force and buildingCount>=200 and game.surfaces[surface_index].count_entities_filtered{force = force, type = {"furnace", "assembling-machine"}}<20) then
     achievement_system.nukedEverything(force)
@@ -365,8 +365,8 @@ end
 -- polution is capped at 500000
 --local function atomic_weapon_hit(surface_index, source_entity, position, crater_internal_r, crater_external_r, fireball_r, fire_outer_r, blast_max_r, tree_fire_max_r, thermal_max_r, load_r, visable_r, polution, flame_proportion, create_small_fires, check_craters)
 script.on_event(defines.events.on_script_trigger_effect, function(event)
-  local mult = 25 / settings.global["general-nuke-range-scaledown"].value
-  local thermal_mult = 30 / settings.global["general-nuke-range-scaledown"].value
+  local mult = 15 / settings.global["general-nuke-range-scaledown"].value
+  local thermal_mult = 20 / settings.global["general-nuke-range-scaledown"].value
   local position = find_event_position(event);
 
   local source = event.source_entity
