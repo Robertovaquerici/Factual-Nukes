@@ -5,7 +5,7 @@ local achievement_system = require("achievement-system")
 local function nukeBuildingDetonate(building)
   local result = nil
   for _,w in pairs(warheads_added) do
-    if(game.item_prototypes[w.warhead] and building.get_output_inventory().get_item_count("detonation" .. w.name .. w.label) ~= 0) then
+    if(prototypes.item[w.warhead] and building.get_output_inventory().get_item_count("detonation" .. w.name .. w.label) ~= 0) then
       result = w.name
       test_system.testDetonation(building.force, w)
       achievement_system.building_detonated(building, w)

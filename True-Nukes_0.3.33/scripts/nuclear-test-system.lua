@@ -26,7 +26,7 @@ local function reevaluateResearch(force)
       force.research_progress = (matchCount + 0.0)/ingCount
       for _,i in pairs(force.current_research.research_unit_ingredients) do
         if((storage.nuclearTests[force.index][i.name] or 0)<i.amount*force.current_research.research_unit_count) then
-          force.print({"script-text.required-tests", (i.amount*force.current_research.research_unit_count-(storage.nuclearTests[force.index][i.name] or 0)), game.item_prototypes[i.name].localised_name})
+          force.print({"script-text.required-tests", (i.amount*force.current_research.research_unit_count-(storage.nuclearTests[force.index][i.name] or 0)), prototypes.item[i.name].localised_name})
         end
       end
     end
